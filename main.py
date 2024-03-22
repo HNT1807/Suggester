@@ -2,6 +2,8 @@ import streamlit as st
 import pyperclip
 import time
 from st_copy_to_clipboard import st_copy_to_clipboard
+import subprocess
+import platform
 
 
 # List of categories
@@ -24,6 +26,22 @@ st.markdown("<h1 style='text-align: center;'>SUGGESTER</h1>", unsafe_allow_html=
 
 col1, col2 = st.columns(2)
 
+def copy_to_clipboard(text):
+    try:
+        if platform.system() == "Windows":
+            subprocess.run("clip", universal_newlines=True, input=text)
+        elif platform.system() == "Linux":
+            xclip_proc = subprocess.Popen(["xclip", "-selection", "clipboard"], stdin=subprocess.PIPE)
+            xclip_proc.communicate(input=text.encode("utf-8"))
+        elif platform.system() == "Darwin":
+            subprocess.run("pbcopy", universal_newlines=True, input=text)
+        else:
+            st.warning("Copying to clipboard is not supported on this platform.")
+    except Exception as e:
+        st.error(f"Failed to copy text: {e}")
+    else:
+        st.success(f'Copied "{text}" to clipboard!', icon="✨")
+
 with col1:
     st.subheader('Categories')
     category_filter = st.text_input('Filter categories', key='category_filter')
@@ -31,8 +49,7 @@ with col1:
     for idx, cat in enumerate(filtered_categories):
         button_key = f'category_{idx}'
         if st.button(cat, key=button_key):
-            pyperclip.copy(cat)
-            st.success(f'Copied "{cat}" to clipboard!', icon="✨")
+            copy_to_clipboard(cat)
 
 with col2:
     st.subheader('Subcategories')
@@ -41,5 +58,4 @@ with col2:
     for idx, subcat in enumerate(filtered_subcategories):
         button_key = f'subcategory_{idx}'
         if st.button(subcat, key=button_key):
-            pyperclip.copy(subcat)
-            st.success(f'Copied "{subcat}" to clipboard!', icon="✨")
+            copy_to_clipboard(subcat)
