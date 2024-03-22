@@ -1,5 +1,5 @@
 import streamlit as st
-
+import pyperclip
 import time
 from st_copy_to_clipboard import st_copy_to_clipboard
 
