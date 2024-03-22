@@ -39,5 +39,5 @@ with col2:
     filtered_subcategories = filter_options(subcategories, subcategory_filter)
     for subcat in filtered_subcategories:
         if st.button(f'{subcat}'):
-            st_copy_to_clipboard(subcat)
+            st_copy_to_clipboard("VOILA")
             st.success(f'Copied "{subcat}" to clipboard!', icon="✨")
