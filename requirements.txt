@@ -31,6 +31,7 @@ rich==13.7.1
 rpds-py==0.18.0
 six==1.16.0
 smmap==5.0.1
+st-copy-to-clipboard==0.1.4
 streamlit==1.32.2
 tenacity==8.2.3
 toml==0.10.2
