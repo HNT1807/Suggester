@@ -1,6 +1,7 @@
 import streamlit as st
 import pyperclip
 import time
+from st_copy_to_clipboard import st_copy_to_clipboard
 
 
 # List of categories
@@ -29,7 +30,7 @@ with col1:
     filtered_categories = filter_options(categories, category_filter)
     for cat in filtered_categories:
         if st.button(f'{cat}'):
-            pyperclip.copy(cat)
+            st_copy_to_clipboard(cat)
             st.success(f'Copied "{cat}" to clipboard!', icon="✨")
 
 with col2:
@@ -37,6 +38,6 @@ with col2:
     subcategory_filter = st.text_input('Filter subcategories', key='subcategory_filter')
     filtered_subcategories = filter_options(subcategories, subcategory_filter)
     for subcat in filtered_subcategories:
-        if st.button(f'Copy: {subcat}'):
-            pyperclip.copy(subcat)
+        if st.button(f'{subcat}'):
+            st_copy_to_clipboard(subcat)
             st.success(f'Copied "{subcat}" to clipboard!', icon="✨")
