@@ -1,5 +1,5 @@
 import streamlit as st
-import pyperclip
+
 import time
 from st_copy_to_clipboard import st_copy_to_clipboard
 
@@ -28,16 +28,18 @@ with col1:
     st.subheader('Categories')
     category_filter = st.text_input('Filter categories', key='category_filter')
     filtered_categories = filter_options(categories, category_filter)
-    for cat in filtered_categories:
-        if st.button(f'{cat}'):
-            st_copy_to_clipboard(cat)
+    for idx, cat in enumerate(filtered_categories):
+        button_key = f'category_{idx}'
+        if st.button(cat, key=button_key):
+            pyperclip.copy(cat)
             st.success(f'Copied "{cat}" to clipboard!', icon="✨")
 
 with col2:
     st.subheader('Subcategories')
     subcategory_filter = st.text_input('Filter subcategories', key='subcategory_filter')
     filtered_subcategories = filter_options(subcategories, subcategory_filter)
-    for subcat in filtered_subcategories:
-        if st.button(f'{subcat}'):
-            st_copy_to_clipboard("VOILA")
+    for idx, subcat in enumerate(filtered_subcategories):
+        button_key = f'subcategory_{idx}'
+        if st.button(subcat, key=button_key):
+            pyperclip.copy(subcat)
             st.success(f'Copied "{subcat}" to clipboard!', icon="✨")
